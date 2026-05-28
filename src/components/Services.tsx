@@ -1,7 +1,8 @@
 import { Globe, MapPin, Target, Wrench } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { SERVICES } from '../siteData';
 
-const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+const iconMap: Record<string, LucideIcon> = {
   Globe, MapPin, Target, Wrench,
 };
 

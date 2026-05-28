@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import HomePage from './pages/HomePage';
 import IntakePage from './pages/IntakePage';
+import ScrollReveal from './components/ScrollReveal';
 
 function getPath() {
   return window.location.pathname;
@@ -34,5 +35,10 @@ export default function App() {
   }, []);
 
   if (path === '/intake') return <IntakePage />;
-  return <HomePage />;
+  return (
+    <>
+      <ScrollReveal />
+      <HomePage />
+    </>
+  );
 }
