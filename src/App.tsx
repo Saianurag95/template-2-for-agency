@@ -5,6 +5,7 @@ import PaymentConfirmation from './components/PaymentConfirmation';
 import ScrollReveal from './components/ScrollReveal';
 
 function getPath() {
+  if (window.location.hash === '#payment-confirmation') return '/payment-confirmation';
   return window.location.pathname;
 }
 
@@ -14,7 +15,11 @@ export default function App() {
   useEffect(() => {
     const handler = () => setPath(getPath());
     window.addEventListener('popstate', handler);
-    return () => window.removeEventListener('popstate', handler);
+    window.addEventListener('hashchange', handler);
+    return () => {
+      window.removeEventListener('popstate', handler);
+      window.removeEventListener('hashchange', handler);
+    };
   }, []);
 
   // Intercept anchor clicks for client-side navigation
