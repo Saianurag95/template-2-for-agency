@@ -582,7 +582,7 @@ function Step8({ form, setForm }: { form: FormData; setForm: React.Dispatch<Reac
 function Step9({ form, setForm }: { form: FormData; setForm: React.Dispatch<React.SetStateAction<FormData>> }) {
   return (
     <div className="space-y-5">
-      <p className="text-sm text-gray-500">All prices are demo pricing. Confirm with the agency before payment.</p>
+      <p className="text-sm text-gray-500">All prices are demo pricing. Add ₹500 to ₹900 if we arrange domain and hosting. Payment is online-only through Razorpay after submission.</p>
       <div className="grid sm:grid-cols-3 gap-4">
         {PACKAGES.map((pkg) => (
           <button
@@ -602,6 +602,7 @@ function Step9({ form, setForm }: { form: FormData; setForm: React.Dispatch<Reac
               </div>
             )}
             <div className="font-display font-bold text-xl text-gray-900 mb-0.5">{pkg.price}</div>
+            {"hostingPrice" in pkg && <div className="text-xs font-semibold text-teal-600 mb-1">{pkg.hostingPrice}</div>}
             <div className="font-semibold text-gray-800 text-sm mb-1">{pkg.name}</div>
             <div className="text-xs text-gray-400 mb-3">{pkg.pages} · {pkg.delivery}</div>
             <ul className="space-y-1">
@@ -624,7 +625,7 @@ function Step9({ form, setForm }: { form: FormData; setForm: React.Dispatch<Reac
 
 function Step10({ form, setForm }: { form: FormData; setForm: React.Dispatch<React.SetStateAction<FormData>> }) {
   const selectedPkg = PACKAGES.find((p) => p.id === form.selectedPackage);
-  const paymentMethods = ['Bank transfer (account shared via WhatsApp)', 'Easypaisa / JazzCash', 'Cash on meeting', 'I will confirm payment method later'];
+  const paymentMethods = ['Razorpay online payment'];
 
   return (
     <div className="space-y-5">
@@ -637,7 +638,7 @@ function Step10({ form, setForm }: { form: FormData; setForm: React.Dispatch<Rea
             </div>
             <div className="font-display font-bold text-teal-700 text-xl">{selectedPkg.price}</div>
           </div>
-          <p className="text-xs text-teal-500 mt-2">Demo pricing — confirm with agency before transferring</p>
+          <p className="text-xs text-teal-500 mt-2">Online payment only. Add ₹500 to ₹900 if we arrange domain and hosting.</p>
         </div>
       )}
       <div>
@@ -652,7 +653,7 @@ function Step10({ form, setForm }: { form: FormData; setForm: React.Dispatch<Rea
         <label className="flex items-start gap-3 cursor-pointer">
           <input type="checkbox" checked={form.paymentConfirmed} onChange={(e) => setForm((p) => ({ ...p, paymentConfirmed: e.target.checked }))} className="mt-0.5 w-4 h-4 accent-teal-600" />
           <span className="text-sm text-gray-700">
-            I understand this is demo pricing and will confirm the final amount with the agency before any payment. *
+            I understand payment must be completed online through Razorpay after submitting this intake. *
           </span>
         </label>
         <label className="flex items-start gap-3 cursor-pointer">
