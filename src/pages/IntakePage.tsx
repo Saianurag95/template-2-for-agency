@@ -17,6 +17,7 @@ import {
   ClipboardList,
 } from 'lucide-react';
 import { TEMPLATE_IDS, PACKAGES } from '../siteData';
+import { submitIntakeWithRazorpay } from '../payments/razorpay';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -730,7 +731,19 @@ export default function IntakePage() {
 
   const handleNext = () => {
     if (currentStep < 11 && canContinue) setCurrentStep((s) => s + 1);
-    if (currentStep === 11) setSubmitted(true);
+    if (currentStep === 11) {
+      const selectedPkg = PACKAGES.find((p) => p.id === form.selectedPackage);
+      submitIntakeWithRazorpay({
+        templateId: form.selectedTemplateId || 'AG-LOCAL-02',
+        formData: form as unknown as Record<string, unknown>,
+        packageName: selectedPkg?.name || form.selectedPackage || 'Starter',
+        packagePrice: selectedPkg?.price,
+        customerName: form.contactName,
+        customerEmail: form.contactEmail,
+        customerPhone: form.contactPhone,
+        businessName: form.businessName,
+      }).catch(() => setSubmitted(true));
+    }
   };
 
   const handleBack = () => {
@@ -895,7 +908,7 @@ export default function IntakePage() {
               disabled={!canContinue}
               className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 disabled:bg-gray-200 disabled:cursor-not-allowed text-white disabled:text-gray-400 text-sm font-semibold px-6 py-2.5 rounded-xl transition-all"
             >
-              {currentStep === 11 ? 'Submit Project' : 'Save & Continue'}
+              {currentStep === 11 ? 'Pay with Razorpay' : 'Save & Continue'}
               <ChevronRight size={16} />
             </button>
           </div>

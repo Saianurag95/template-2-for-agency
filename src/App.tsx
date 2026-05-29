@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import HomePage from './pages/HomePage';
 import IntakePage from './pages/IntakePage';
+import PaymentConfirmation from './components/PaymentConfirmation';
 import ScrollReveal from './components/ScrollReveal';
 
 function getPath() {
@@ -35,6 +36,7 @@ export default function App() {
   }, []);
 
   if (path === '/intake') return <IntakePage />;
+  if (path === '/payment-confirmation') return <PaymentConfirmation />;
   return (
     <>
       <ScrollReveal />
